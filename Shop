@@ -1,1 +1,100 @@
+package BücherLaden;
+
+import java.util.ArrayList;
+
+public class Shop {
+	private String name;
+	private double umsatz;
+	private  ArrayList<Book> buchliste;
+
+	public Shop (String name, double umsatz, ArrayList<Book> inventar) {
+		this.name=name;
+		this.umsatz= umsatz;
+		this.buchliste= inventar;
+	}
+	public void verkaufen(Book b, Customer c) {
+
+		if(buchliste.isEmpty()) {
+			System.out.println( "Der Laden hat keine Bücher mehr.");
+			return;
+		}
+		
+		if(c.getGeldsumme()<b.getPreis())
+		{
+			System.out.println(c +"hat nicht genug Geld um das Buch zu kaufen.");
+			return;
+		}
+		c.addNeuesBuch(b);
+		c.setGeldsumme(c.getGeldsumme()-b.getPreis());
+		buchliste.remove(b);
+	
+		setUmsatz(getUmsatz()+b.getPreis());
+	}
+
+	public ArrayList<Book> filterGenre(String genre) {
+		ArrayList<Book> filteredList = new ArrayList<>();
+		for (Book b : buchliste) {
+			if(b.getGenre()!=null) {
+				if (b.getGenre().equals(genre)) {
+					filteredList.add(b);
+				}
+			}
+			
+		}
+		return filteredList;
+	}
+
+	public void vergleich (Book b) {
+		for(Book book:buchliste) {
+			if(!book.getIsbn().equals(b.getIsbn())) {
+
+				return;}}
+
+	}
+	public ArrayList<Book> entferneDuplikate() {
+		ArrayList<Book> neueListe= new ArrayList<>();
+		for (Book book: buchliste) {
+			if(!neueListe.contains(book)) {
+				neueListe.add(book);
+			}
+		}
+		return neueListe;
+	}
+
+
+	public void addBook(Book b) {
+        if (b.getTitel() == null) {
+            return;
+        }
+
+        buchliste.add(b);
+    }
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public double getUmsatz() {
+		return umsatz;
+	}
+	public void setUmsatz(double umsatz) {
+		this.umsatz = umsatz;
+	}
+	public ArrayList<Book> getBuch() {
+		return buchliste;
+	}
+	public void setBuch(ArrayList<Book> buch) {
+		this.buchliste = buch;
+	}
+
+	@Override
+	public String toString () {
+		return name+" "+umsatz+" "+buchliste;
+	}
+
+
+
+}
 
