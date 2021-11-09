@@ -1,1 +1,51 @@
+package BücherLaden;
+
+import BücherLaden.Book;
+import java.util.ArrayList;
+
+public class Verkaufen {
+
+	public static void main(String[] args) {
+		Customer c = new Customer("Peter Maier", new ArrayList<Book>(),15.00);
+		Book b =new Book("Herr der Ringe", 14.99, 1200, "Fantasy","234-5467893214");
+	
+		Book x = new Book("Harry Potter",16.99,1299,"Fantasy","978-3608963762");
+		Book z = new Book("Unsere Erde",24.99,2500,"Biography","978-3442267747");
+		Book w = new Book("Spiderman",250,10500,"Comic","978-758245159");
+		Book i = new Book("Batman",20.99,2500,"Comic","978-3841335180");
+		Book y = new Book("Indiana Jones",30.99,1780,"Adventure","978-3442267819");
+		
+		ArrayList<Book> inventar=new ArrayList<>();
+		inventar.add(b);
+		inventar.add(b);
+		inventar.add(b);
+		inventar.add(b);
+		inventar.add(b);
+		
+		Shop p = new Shop ("PayBooks", 2300, inventar);
+		
+		System.out.println(p);
+		p.verkaufen(b, c);
+		System.out.println(p);
+		System.out.println(c);
+	
+		
+		p.entferneDuplikate();
+		System.out.println(p.entferneDuplikate());
+		
+		ArrayList<Book> filter = p.filterGenre("Comic");
+		for(Book buch: filter) {
+			System.out.println(buch);
+			
+		
+		}
+		p.addBook(x);
+		p.addBook(y);
+		p.addBook(w);
+		p.addBook(z);
+		p.addBook(i);
+		System.out.println(p);
+	}
+	
+}
 
