@@ -5,7 +5,7 @@ public class Book {
 	private double preis;
 	private int seitenanzahl;
 	private String genre;
-	private String[] genrelist= {"Adventure","Biography","Comic","Fantasy"};
+	private String[] genreList= {"Adventure","Biography","Comic","Fantasy"};
 	private String isbn;
 
 	public boolean isISBN13(String eingabe) {
@@ -113,7 +113,7 @@ public class Book {
 		this.seitenanzahl = seitenanzahl;
 	}
 	private boolean isGenreAccepted(String s) {
-		String[] genreList = { "Adventure", "Biography", "Comic", "Fantasy" };
+//		String[] genreList = { "Adventure", "Biography", "Comic", "Fantasy" };
 
 		for (int i = 0; i < genreList.length; i++) {
 			if (s.equals(genreList[i])) {
@@ -139,6 +139,5 @@ public class Book {
 		return titel;
 	}
 }
-
 
 
