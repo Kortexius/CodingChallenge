@@ -15,10 +15,13 @@ public class Shop {
 	public void verkaufen(Book b, Customer c) {
 
 		if(buchliste.isEmpty()) {
-			System.out.println( "Der Laden hat keine Bücher mehr.");
+			System.out.println(b+ "hat keine Bücher mehr.");
 			return;
 		}
-		
+		if (!buchliste.contains(b)) {
+			System.out.println("Diese Buch ist nicht vorhanden");
+			return;
+		}
 		if(c.getGeldsumme()<b.getPreis())
 		{
 			System.out.println(c +"hat nicht genug Geld um das Buch zu kaufen.");
@@ -44,13 +47,19 @@ public class Shop {
 		return filteredList;
 	}
 
-	public void vergleich (Book b) {
-		for(Book book:buchliste) {
-			if(!book.getIsbn().equals(b.getIsbn())) {
+	public void vergleich (Book b, Book x) {
+		
+			if(b.getIsbn().equals(x.getIsbn())) {
+				System.out.println("Die Bücher sind gleich. :)");
+				}
+				else{
+		    	 System.out.println("Es sind nicht die gleichen Bücher! ");
+		    	 return;
+		    	 }
+				
+			}
 
-				return;}}
-
-	}
+	
 	public ArrayList<Book> entferneDuplikate() {
 		ArrayList<Book> neueListe= new ArrayList<>();
 		for (Book book: buchliste) {
@@ -97,4 +106,3 @@ public class Shop {
 
 
 }
-
