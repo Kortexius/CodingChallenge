@@ -57,7 +57,7 @@ public class Book {
 			return false;
 		}
 
-		// check of "-" zeichen ist in der richtige Stelle steht
+		// check of "-" zeichen ist an der richtige Stelle 
 		int dashIndex = s.indexOf("-");
 		if (dashIndex != 3) {
 			System.out.println("Falscher index");
