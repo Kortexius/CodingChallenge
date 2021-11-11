@@ -1,1 +1,94 @@
+package BücherLaden;
+
+import java.util.ArrayList;
+
+import junit.framework.TestCase;
+
+public class ShopTest extends TestCase {
+	public ShopTest(String testname) {
+		super(testname);
+	}
+	Customer c;
+	Book b;
+	Book d;
+	Book e;
+	Shop s;
+	public void setUp() {
+		c = new Customer("Peter",new ArrayList<Book>(),50.00);
+		b = new Book("Pan",23.99,1300,"Fantasy","978-3841335180");
+		d = new Book("Pan",23.99,1300,"Fantasy","978-3841335180");
+		e = new Book("Pans Labyrinth",23.99,1300,"Fantasy","978-3608963762");
+		s = new Shop("BookShop",23000,new ArrayList<Book>());
+		s.addBook(b);
+		
+	}
+	
+	public void testKundekeingeld() {
+		c.setGeldsumme(20.00);
+		double geldvorher= c.getGeldsumme();
+		double umsatzvorher=s.getUmsatz();
+		s.verkaufen(b, c);
+		assertTrue(c.getGeldsumme()==geldvorher);
+		assertTrue(s.getUmsatz()==umsatzvorher);
+		assertTrue(s.getBuch().size()==1);
+		assertTrue(c.getBuecher().size()==0);
+	}
+	public void testBuchladenkeinBuch() {
+		double umsatzvorher=s.getUmsatz();
+		double geldvorher= c.getGeldsumme();
+		s.setBuch(new ArrayList<Book>());
+		System.out.println(s.getBuch());
+		s.verkaufen(b, c);
+		System.out.println(s.getBuch());
+		assertTrue(s.getUmsatz()==umsatzvorher);
+		assertTrue(c.getGeldsumme()==geldvorher);
+		
+		
+		
+	}
+	public void testKeinbestimmtesBuch() {
+		double umsatzvorher=s.getUmsatz();
+		s.verkaufen(e, c);
+		assertFalse(c.getBuecher().contains(e));
+	}
+	public void testVerkauferfolgreich() {
+		c.setGeldsumme(25.00);
+		double geldvorher= c.getGeldsumme();
+		double umsatzvorher=s.getUmsatz();
+		s.addBook(b);
+		s.verkaufen(b, c);
+		assertTrue(c.getGeldsumme()==Math.round((geldvorher-b.getPreis())*100)/100.0);
+		assertTrue(s.getUmsatz()==Math.round((umsatzvorher+b.getPreis())*100)/100.0);
+		assertFalse(s.getBuch().size()==2);
+		assertFalse(c.getBuecher().size()==0);
+		
+	}
+	public void testDublikat() {
+		ArrayList<Book> ohneDublikate;
+		s.addBook(b);
+		ohneDublikate = s.entferneDuplikate();
+		assertTrue(ohneDublikate.size()==1);
+		
+		
+	}
+	public void testGenre() {
+		ArrayList<Book> genre;
+		genre = s.filterGenre("Fantasy");
+		assertTrue (s.getBuch().containsAll(genre));
+		for(Book g: genre) {
+			assertTrue(g.getGenre().equals("Fantasy"));
+		}
+		 assertTrue(genre.size()==1);
+	}
+	public void testVergleich() {
+		s.vergleich(b, d);
+		assertTrue(b.getIsbn().equals(d.getIsbn()));
+		
+	}
+	public void testBuchhinzufügen() {
+		s.addBook(b);
+		assertTrue(s.getBuch().size()==2);
+		
+	}
+}
 
