@@ -1,0 +1,141 @@
+package BücherLaden;
+
+public class Book {
+	private String titel;
+	private double preis;
+	private int seitenanzahl;
+	private String genre;
+	private String[] genreList= {"Adventure","Biography","Comic","Fantasy"};
+	private String isbn;
+
+	public boolean isISBN13(String eingabe) {
+
+		boolean isThree = false;
+		int summe = 0;
+		int pruefZiffer = 0;
+
+		for (int i = 0; i < eingabe.length() - 1; i++) {
+
+			int currentNumber = Integer.valueOf(eingabe.charAt(i) + "");
+
+			if (isThree) {
+				summe += currentNumber * 3;
+				isThree = false;
+			} else {
+				summe += currentNumber;
+				isThree = true;
+			}
+		}
+		if (summe % 10 == 0) {
+			pruefZiffer = summe % 10;
+
+		} else {
+			int naschsteZehn = 0;
+			while (summe % 10 != 0) {
+				summe++;
+				naschsteZehn++;
+			}
+
+			pruefZiffer = naschsteZehn;
+
+		}
+
+		int letzteZiffer = Integer.valueOf(eingabe.charAt(eingabe.length() - 1) + "");
+
+		if (pruefZiffer == letzteZiffer) {
+			return true;
+		}
+		return false;
+
+	}
+
+	private boolean isISBNAccepted(String s) {
+
+	
+		if (s.length() != 14) {
+			System.out.println(s + "ISBN hat die falsche Länge ");
+			return false;
+		}
+
+		
+		int dashIndex = s.indexOf("-");
+		if (dashIndex != 3) {
+			System.out.println("Falscher index");
+			return false;
+		}
+
+	
+		String ersteTeil = s.substring(0, dashIndex);
+		String zweiteTeil = s.substring(dashIndex + 1);
+		String zusamen = ersteTeil + zweiteTeil;
+
+		try {
+			long convert = Long.parseLong(zusamen);
+
+			
+			return isISBN13(zusamen);
+
+		} catch (Exception e) {
+			System.out.println(s + "ISBN ist falsch  ");
+			return false;
+		}
+
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	public String getTitel() {
+		return titel;
+	}
+	public void setTitel(String titel) {
+		this.titel = titel;
+	}
+	public double getPreis() {
+		return preis;
+	}
+	public void setPreis(double preis) {
+		this.preis = preis;
+	}
+	public String getGenre() {
+		return genre;
+	}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	public int getSeitenanzahl() {
+		return seitenanzahl;
+	}
+	public void setSeitenanzahl(int seitenanzahl) {
+		this.seitenanzahl = seitenanzahl;
+	}
+	private boolean isGenreAccepted(String s) {
+		for (int i = 0; i < genreList.length; i++) {
+			if (s.equals(genreList[i])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public Book(String titel, double preis, int seitenanzahl, String genre, String isbn) {
+		if(!isGenreAccepted(genre)|| !isISBNAccepted(isbn)) {return;};
+		this.titel = titel;
+		this.preis = preis;
+		this.seitenanzahl=seitenanzahl;
+		this.genre=genre;
+		this.isbn=isbn;
+
+	}
+
+	@Override
+	public String toString() {
+		return titel;
+	}
+}
+
+
